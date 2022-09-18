@@ -1,6 +1,6 @@
 from app import app
-from flask import render_template, request, redirect
-import users, games
+from flask import render_template, request, redirect, abort
+import users, games, platforms
 
 @app.route("/")
 def index():
@@ -72,4 +72,52 @@ def register():
 @app.route("/listings")
 def listings():
     all_games = games.get_all_games()
-    return render_template("listings.html", all_games=all_games)
+    return render_template("listings.html", games=all_games)
+
+@app.route("/admin")
+def admin():
+    if users.is_admin() == False:
+        abort(403)
+    if request.method == "GET":
+        return render_template("admin.html")
+
+@app.route("/admin_games", methods=["GET", "POST"])
+def admin_games():
+    if users.is_admin() == False:
+        abort(403)
+    if request.method == "GET":
+        visible_platforms = platforms.get_visible_platforms()
+        return render_template("admin_games.html", platforms=visible_platforms)
+    if request.method == "POST":
+        token = request.form["csrf_token"]
+        if users.csrf_token_ok(token) == False:
+            abort(403)
+        name = request.form["name"]
+        platform_id = request.form["platform_id"]
+        if games.add_game(name, platform_id):
+            return redirect("/listings")
+        return render_template(
+            "error.html",
+            message="Game addition failed",
+            previous="/admin_games"
+        )
+
+@app.route("/admin_platforms", methods=["GET", "POST"])
+def admin_platforms():
+    if users.is_admin() == False:
+        abort(403)
+    if request.method == "GET":
+        all_platforms = platforms.get_all_platforms()
+        return render_template("admin_platforms.html", platforms=all_platforms)
+    if request.method == "POST":
+        token = request.form["csrf_token"]
+        if users.csrf_token_ok(token) == False:
+            abort(403)
+        name = request.form["name"]
+        if platforms.add_platform(name):
+            return redirect("/admin_platforms")
+        return render_template(
+            "error.html",
+            message="Platform addition failed",
+            previous="/admin_platforms"
+        )

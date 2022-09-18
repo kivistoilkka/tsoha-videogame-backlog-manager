@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block title %}Admin: platforms{% endblock %}
+{% block content %}
+<h2>Admin: platforms</h2>
+Admin page for platforms in the database.
+<h3>Add platforms</h3>
+<form action="/admin_platforms" method="POST">
+Name: <input type="text" name="name"><br>
+<input type="submit" value="Add">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+<h3>Platforms currently in the database</h3>
+<table>
+  <tr><th>Name</th><th>Visible</th></tr>
+  {% for platform in platforms %}
+  <tr><td>{{ platform[1] }}</td><td>{{ platform[2] }}</td></tr>
+  {% endfor %}
+  </table>
+{% endblock %}

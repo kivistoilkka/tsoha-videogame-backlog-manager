@@ -4,6 +4,9 @@
 <a href="/">Main page</a> |
 <a href="/listings">Game listings</a> |
 {% if session.user_id %}
+{% if session.admin_link_visible %}
+<a href="/admin">Admin page</a>
+{% endif %}
 You are logged in as {{ session.username }}
 <a href="/logout">Logout</a>
 {% else %}

@@ -5,10 +5,8 @@
 <h3>List of all of the games currently available.</h3>
 <table>
 <tr><th>Name</th><th>Platform</th></tr>
-{% for game in all_games %}
-{% if game[2] %}
+{% for game in games %}
 <tr><td>{{ game[0] }}</td><td>{{ game[1] }}</td></tr>
-{% endif %}
 {% endfor %}
 </table>
 {% endblock %}
