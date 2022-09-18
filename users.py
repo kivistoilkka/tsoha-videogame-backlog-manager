@@ -38,12 +38,23 @@ def logout():
     del session["csrf_token"]
 
 def is_admin():
-    user_id = session.get("user_id", 0)
+    id = user_id()
     sql = "SELECT 1 FROM users WHERE id=:user_id AND is_admin=TRUE"
-    result = db.session.execute(sql, {"user_id":user_id})
+    result = db.session.execute(sql, {"user_id":id})
     if result.fetchone():
         return True
     return False
 
 def csrf_token_ok(token):
     return session["csrf_token"] == token
+
+def is_user():
+    id = user_id()
+    sql = "SELECT 1 FROM users WHERE id=:user_id"
+    result = db.session.execute(sql, {"user_id":id})
+    if result.fetchone():
+        return True
+    return False
+
+def user_id():
+    return session.get("user_id", 0)

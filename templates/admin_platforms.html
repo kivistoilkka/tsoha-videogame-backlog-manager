@@ -11,9 +11,9 @@ Name: <input type="text" name="name"><br>
 </form>
 <h3>Platforms currently in the database</h3>
 <table>
-  <tr><th>Name</th><th>Visible</th></tr>
-  {% for platform in platforms %}
-  <tr><td>{{ platform[1] }}</td><td>{{ platform[2] }}</td></tr>
-  {% endfor %}
-  </table>
+<tr><th>Name</th><th>Visible</th></tr>
+{% for platform in platforms %}
+<tr><td>{{ platform[1] }}</td><td>{{ platform[2] }}</td></tr>
+{% endfor %}
+</table>
 {% endblock %}

@@ -3,10 +3,9 @@ Sovelluksen avulla käyttäjä voi ylläpitää tietokantaa omistamistaan ja pel
 
 Sovelluksen ominaisuuksia ovat:
 - Kaikki vierailijat voivat tarkastella suosituimpien pelien listaa ja linkkien kautta peleihin liittyviä yhteenvetoja ja arvioita.
-- Käyttäjä voi luoda itselleen tunnuksen ja kirjautua sisään ja ulos.
-- Käyttäjä voi lisätä sovelluksen tietokannassa olevan pelin omaan kokoelmaansa.
+- ✅ Käyttäjä voi luoda itselleen tunnuksen ja kirjautua sisään ja ulos.
+- ✅ Käyttäjä voi lisätä sovelluksen tietokannassa olevan pelin omaan kokoelmaansa.
 - Käyttäjä voi päivittää omassa kokoelmassaan olevan pelin tietoja.
-  - Onko pelin pelaaminen aloitettu.
   - Onko pelin tarina läpäisty.
   - Onko peli pelattu läpi 100%.
 - Käyttäjä voi poistaa pelin kokoelmastaan
@@ -15,11 +14,11 @@ Sovelluksen ominaisuuksia ovat:
   - Arvio pelistä asteikolla 0-10.
   - Sanallinen arvio pelistä.
   - Arvion näkyvyys muille käyttäjille.
-- Ylläpitäjä voi lisätä pelejä sovelluksen tietokantaan.
+- ✅ Ylläpitäjä voi lisätä pelejä sovelluksen tietokantaan.
   - Pelin nimi
   - Pelin alusta (esim. pc, pelikonsoli)
 - Ylläpitäjä voi piilottaa pelejä tietokannasta.
-- Ylläpitäjä voi lisätä pelialustoja tietokantaan.
+- ✅ Ylläpitäjä voi lisätä pelialustoja tietokantaan.
 - Ylläpitäjä voi piilottaa pelialustoja tietokannasta.
 
 ## Tietokannan rakenne
