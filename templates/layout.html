@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<title>Videogame Backlog Manager - {% block title %}{% endblock %}</title>
+<h1>Videogame Backlog Manager</h1>
+<a href="/">Main page</a>
+{% if session.user_id %}
+You are logged in as {{ session.username }}
+<a href="/logout">Logout</a>
+{% else %}
+<a href="/login">Login</a>
+{% endif %}
+{% block content %}{% endblock %}

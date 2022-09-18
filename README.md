@@ -25,24 +25,24 @@ Sovelluksen ominaisuuksia ovat:
 ## Tietokannan rakenne
 ```mermaid
 classDiagram
-  class user {
+  class users {
     id INTEGER
     username TEXT
     password TEXT
-    admin BOOLEAN
+    is_admin BOOLEAN
   }
-  class game {
+  class games {
     id INTEGER
     platform_id INTEGER
     name TEXT
     visible BOOLEAN
   }
-  class platform {
+  class platforms {
     id INTEGER
     name TEXT
     visible BOOLEAN
   }
-  class collection_item {
+  class collection_items {
     id INTEGER
     user_id INTEGER
     game_id INTEGER
@@ -50,18 +50,19 @@ classDiagram
     full_completion BOOLEAN
     visible BOOLEAN
   }
-  class game_review {
+  class game_reviews {
     id INTEGER
-    game_id INTEGER
     user_id INTEGER
+    game_id INTEGER
     rating INTEGER
-    visible BOOLEAN
+    comments TEXT
     review_added TIMESTAMP
+    visible BOOLEAN
   }
 
-  user "1" -- "*" collection_item
-  game "1" -- "*" collection_item
-  user "1" -- "*" game_review
-  game "1" -- "*" game_review
-  game "*" --  "1" platform
+  users "1" -- "*" collection_items
+  games "1" -- "*" collection_items
+  users "1" -- "*" game_reviews
+  games "1" -- "*" game_reviews
+  games "*" --  "1" platforms
 ```
