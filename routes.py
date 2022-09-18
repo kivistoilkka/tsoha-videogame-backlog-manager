@@ -81,7 +81,7 @@ def admin():
     if request.method == "GET":
         return render_template("admin.html")
 
-@app.route("/admin_games", methods=["GET", "POST"])
+@app.route("/admin/games", methods=["GET", "POST"])
 def admin_games():
     if users.is_admin() == False:
         abort(403)
@@ -99,10 +99,10 @@ def admin_games():
         return render_template(
             "error.html",
             message="Game addition failed",
-            previous="/admin_games"
+            previous="/admin/games"
         )
 
-@app.route("/admin_platforms", methods=["GET", "POST"])
+@app.route("/admin/platforms", methods=["GET", "POST"])
 def admin_platforms():
     if users.is_admin() == False:
         abort(403)
@@ -115,9 +115,9 @@ def admin_platforms():
             abort(403)
         name = request.form["name"]
         if platforms.add_platform(name):
-            return redirect("/admin_platforms")
+            return redirect("/admin/platforms")
         return render_template(
             "error.html",
             message="Platform addition failed",
-            previous="/admin_platforms"
+            previous="/admin/platforms"
         )

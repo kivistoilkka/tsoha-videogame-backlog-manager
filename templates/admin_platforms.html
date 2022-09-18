@@ -4,7 +4,7 @@
 <h2>Admin: platforms</h2>
 Admin page for platforms in the database.
 <h3>Add platforms</h3>
-<form action="/admin_platforms" method="POST">
+<form action="/admin/platforms" method="POST">
 Name: <input type="text" name="name"><br>
 <input type="submit" value="Add">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
