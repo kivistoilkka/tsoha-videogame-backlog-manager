@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request, redirect
-import users
+import users, games
 
 @app.route("/")
 def index():
@@ -68,3 +68,8 @@ def register():
                 message="Registration failed, try choosing a different username",
                 previous="/register"
             )
+
+@app.route("/listings")
+def listings():
+    all_games = games.get_all_games()
+    return render_template("listings.html", all_games=all_games)

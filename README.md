@@ -33,8 +33,8 @@ classDiagram
   }
   class games {
     id INTEGER
-    platform_id INTEGER
     name TEXT
+    platform_id INTEGER
     visible BOOLEAN
   }
   class platforms {
