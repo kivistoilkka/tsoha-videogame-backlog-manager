@@ -1,5 +1,5 @@
 # Videogame Backlog Manager
-Sovellus löytyy [täältä](https://videogame-backlog-manager.herokuapp.com/), admin-oikeuksilla toimivat tunnukset Labtoolista ensimmäisen viikon palautteen kommenttina.
+Sovellus löytyy [täältä](https://videogame-backlog-manager.herokuapp.com/), admin-oikeuksilla toimivat tunnukset vertaisarviointia varten ovat "vertaisarvioija" ja "hankalasalainensana".
 
 Sovelluksen avulla käyttäjä voi ylläpitää tietokantaa omistamistaan ja pelaamistaan videopeleistä. Käyttäjä voi lisätä pelejä kokoelmaansa ja tallentaa peliin liittyviä tietoja, kuten onko pelin tarina läpäisty, onko peli suoritettu kokonaisuudessaan ja minkä numeroarvion käyttäjä haluaa antaa pelille. Sovellus myös näyttää etusivulla yhteenvedon suosituimmista peleistä, niiden läpäisyprosenteista ja pelin arvioiden keskiarvon. Linkkien kautta pääsee tarkastelemaan kaikkien pelien listaa ja tarkemmin kunkin pelin tietoja. Jokainen kirjautunut käyttäjä on peruskäyttäjä tai ylläpitäjä.
 
