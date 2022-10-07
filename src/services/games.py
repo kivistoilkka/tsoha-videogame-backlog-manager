@@ -13,6 +13,8 @@ def get_all_games():
     return result.fetchall()
 
 def add_game(name, platform_id):
+    if game_in_database(name, platform_id):
+        return False
     try:
         sql = "INSERT INTO games (name, platform_id, visible) \
             VALUES (:name, :platform_id, TRUE)"
@@ -21,3 +23,14 @@ def add_game(name, platform_id):
         return True
     except:
         return False
+
+def game_in_database(name, platform_id):
+    #TODO: check with lowercase names
+    sql = "SELECT 1 FROM games WHERE name=:name AND platform_id=:platform_id"
+    result = db.session.execute(sql, {"name":name, "platform_id":platform_id})
+    if result.fetchone():
+        return True
+    return False
+
+#TODO: set_game_hidden
+#TODO: set_game_visible
