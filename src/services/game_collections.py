@@ -13,6 +13,8 @@ def add_item(game_id, story_completed, full_completion):
     user_id = users.user_id()
     if not user_id:
         return False
+    if game_in_collection(user_id, game_id):
+        return False
     try:
         sql = "INSERT INTO collection_items \
             (user_id, game_id, story_completed, full_completion, visible) \
@@ -30,3 +32,10 @@ def add_item(game_id, story_completed, full_completion):
         return True
     except:
         return False
+
+def game_in_collection(user_id, game_id):
+    sql = "SELECT 1 FROM collection_items WHERE user_id=:user_id AND game_id=:game_id"
+    result = db.session.execute(sql, {"user_id":user_id, "game_id":game_id})
+    if result.fetchone():
+        return True
+    return False
