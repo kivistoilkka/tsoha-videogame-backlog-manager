@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %}Game listings{% endblock %}
+{% block content %}
+<h2>Game Listings</h2>
+<h3>List of all of the games currently available.</h3>
+<table>
+<tr><th>Name</th><th>Platform</th></tr>
+{% for game in games %}
+<tr><td>{{ game[1] }}</td><td>{{ game[2] }}</td></tr>
+{% endfor %}
+</table>
+{% endblock %}

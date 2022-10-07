@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block title %}Game collection{% endblock %}
+{% block content %}
+<h2>Game collection</h2>
+<table>
+<tr><th>Name</th><th>Platform</th><th>Story completed</th><th>Full completion</th></tr>
+{% for game in collection %}
+<tr>
+<td>{{ game[0] }}</td>
+<td>{{ game[1] }}</td>
+<td>{{ game[2] }}</td>
+<td>{{ game[3] }}</td>
+</tr>
+{% endfor %}
+</table>
+{% if this_user %}
+<h3>Add new game to the collection</h3>
+<form action="/collection/{{ user_id }}" method="POST">
+Game:
+<select name="game_id">
+{% for game in games %}
+<option value={{ game[0] }}>{{ game[1] }} ({{ game[2] }})</option>
+{% endfor %}
+</select><br>
+Story completed:
+<input type="radio" name="story_completed" value="TRUE"> Yes
+<input type="radio" name="story_completed" value="FALSE"> No<br>
+Full completion:
+<input type="radio" name="full_completion" value="TRUE"> Yes
+<input type="radio" name="full_completion" value="FALSE"> No<br>
+<input type="submit" value="Add">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+{% endif %}
+{% endblock %}
