@@ -26,7 +26,7 @@ def login(username, password):
     if check_password_hash(user.password, password):
         session["user_id"] = user.id
         session["username"] = username
-        session["admin_link_visible"] = user.is_admin
+        session["user_is_admin"] = user.is_admin
         session["csrf_token"] = secrets.token_hex(16)
         return True
     return False
@@ -34,7 +34,7 @@ def login(username, password):
 def logout():
     del session["user_id"]
     del session["username"]
-    del session["admin_link_visible"]
+    del session["user_is_admin"]
     del session["csrf_token"]
 
 def is_admin():

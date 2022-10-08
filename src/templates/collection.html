@@ -3,13 +3,30 @@
 {% block content %}
 <h2>Game collection</h2>
 <table>
-<tr><th>Name</th><th>Platform</th><th>Story completed</th><th>Full completion</th></tr>
+<tr>
+<th>Name</th>
+<th>Platform</th>
+<th>Story completed</th>
+<th>Full completion</th>
+{% if this_user %}
+<th>Hide from collection</th>
+{% endif %}
+</tr>
 {% for game in collection %}
 <tr>
-<td>{{ game[0] }}</td>
 <td>{{ game[1] }}</td>
 <td>{{ game[2] }}</td>
 <td>{{ game[3] }}</td>
+<td>{{ game[4] }}</td>
+{% if this_user %}
+<td>
+<form action="/collection/{{ user_id }}/set_hidden" method="POST">
+<input type="submit" value="Hide">
+<input type="hidden" name="game_id" value="{{ game[0] }}">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+</td>
+{% endif %}
 </tr>
 {% endfor %}
 </table>
