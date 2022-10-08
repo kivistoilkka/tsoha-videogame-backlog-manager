@@ -41,10 +41,10 @@ Game:
 </select><br>
 Story completed:
 <input type="radio" name="story_completed" value="TRUE"> Yes
-<input type="radio" name="story_completed" value="FALSE"> No<br>
+<input type="radio" name="story_completed" value="FALSE" checked> No<br>
 Full completion:
 <input type="radio" name="full_completion" value="TRUE"> Yes
-<input type="radio" name="full_completion" value="FALSE"> No<br>
+<input type="radio" name="full_completion" value="FALSE" checked> No<br>
 <input type="submit" value="Add">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
