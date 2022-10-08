@@ -42,10 +42,10 @@ def register():
                 message="Some of the fields are missing",
                 previous="/register"
             )
-        if " " in username:
+        if " " in username or " " in password1 or " " in password2:
             return render_template(
                 "error.html",
-                message="Username cannot contain whitespaces",
+                message="Username and password cannot contain whitespaces",
                 previous="/register"
             )
         if len(username) > 31:

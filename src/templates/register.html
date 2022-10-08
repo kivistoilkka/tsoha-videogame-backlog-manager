@@ -39,6 +39,10 @@ check = (form) => {
         alert("Passwords do not match")
         return false
     }
+    if (form.password1.value.includes(" ")) {
+        alert("Password cannot contain whitespaces")
+        return false
+    }
     return true
 }
 </script>
