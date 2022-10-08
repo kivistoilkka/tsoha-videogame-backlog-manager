@@ -7,10 +7,10 @@ Sovelluksen ominaisuuksia ovat:
 - Kaikki vierailijat voivat tarkastella suosituimpien pelien listaa ja linkkien kautta peleihin liittyviä yhteenvetoja ja arvioita.
 - ✅ Käyttäjä voi luoda itselleen tunnuksen ja kirjautua sisään ja ulos.
 - ✅ Käyttäjä voi lisätä sovelluksen tietokannassa olevan pelin omaan kokoelmaansa.
-- Käyttäjä voi päivittää omassa kokoelmassaan olevan pelin tietoja.
+- ✅ Käyttäjä voi päivittää omassa kokoelmassaan olevan pelin tietoja.
   - Onko pelin tarina läpäisty.
   - Onko peli pelattu läpi 100%.
-- Käyttäjä voi poistaa pelin kokoelmastaan
+- ✅ Käyttäjä voi poistaa pelin kokoelmastaan
   - Peli piilotetaan, pelin uudelleen lisääminen tuo pelin uudestaan näkyviin
 - Käyttäjä voi kirjoittaa pelistä arvion.
   - Arvio pelistä asteikolla 0-10.
