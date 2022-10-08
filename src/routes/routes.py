@@ -1,3 +1,4 @@
+from email import message
 from app import app
 from flask import render_template, request, redirect, abort
 import services.users as users, services.games as games, services.platforms as platforms, services.game_collections as game_collections
@@ -52,6 +53,12 @@ def register():
             return render_template(
                 "error.html",
                 message="Password too long, use less than 64 characters",
+                previous="/register"
+            )
+        if len(username) < 5 or len(password1) < 5:
+            return render_template(
+                "error.html",
+                message="Username and/or password too short, use at least 5 characters in each",
                 previous="/register"
             )
         if password1 != password2:

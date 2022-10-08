@@ -19,8 +19,16 @@ check = (form) => {
         alert("Too long username, use less than 32 characters")
         return false
     }
+    if (form.username.value.length < 5) {
+        alert("Too short username, use at least 5 characters")
+        return false
+    }
     if (form.password1.value.length > 63 || form.password2.value.length > 63) {
         alert("Too long password, use less than 64 characters")
+        return false
+    }
+    if (form.password1.value.length < 5 || form.password2.value.length < 5) {
+        alert("Too short password, use at least 5 characters")
         return false
     }
     if (!form.password1.value.equals(form.password2.value)) {
