@@ -1,4 +1,3 @@
-from email import message
 from app import app
 from flask import render_template, request, redirect, abort
 import services.users as users, services.games as games, services.platforms as platforms, services.game_collections as game_collections
@@ -41,6 +40,12 @@ def register():
             return render_template(
                 "error.html",
                 message="Some of the fields are missing",
+                previous="/register"
+            )
+        if " " in username:
+            return render_template(
+                "error.html",
+                message="Username cannot contain whitespaces",
                 previous="/register"
             )
         if len(username) > 31:
