@@ -12,16 +12,16 @@ Sovelluksen ominaisuuksia ovat:
   - Onko peli pelattu läpi 100%.
 - ✅ Käyttäjä voi poistaa pelin kokoelmastaan
   - Peli piilotetaan, pelin uudelleen lisääminen tuo pelin uudestaan näkyviin
-- Käyttäjä voi kirjoittaa pelistä arvion.
-  - Arvio pelistä asteikolla 0-10.
+- ✅ Käyttäjä voi kirjoittaa pelistä arvion.
+  - Arvio pelistä asteikolla 0-5.
   - Sanallinen arvio pelistä.
-  - Arvion näkyvyys muille käyttäjille.
 - ✅ Ylläpitäjä voi lisätä pelejä sovelluksen tietokantaan.
   - Pelin nimi
   - Pelin alusta (esim. pc, pelikonsoli)
 - Ylläpitäjä voi piilottaa pelejä tietokannasta.
 - ✅ Ylläpitäjä voi lisätä pelialustoja tietokantaan.
 - Ylläpitäjä voi piilottaa pelialustoja tietokannasta.
+- Ylläpitäjä voi piilottaa arvosteluja tietokannasta.
 
 ## Tietokannan rakenne
 ```mermaid

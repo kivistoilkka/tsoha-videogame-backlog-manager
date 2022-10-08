@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block title %}Reviews of {{ game_name }}{% endblock %}
+{% block content %}
+<h2>Reviews of {{ game_name }} on {{ platform_name }}</h2>
+<table>
+<tr><th>Rating</th><th>Comments</th><th>Reviewer</th><th>Review added</th></tr>
+{% for review in reviews %}
+<tr>
+<td>{{ review[0] }}</td>
+<td>{{ review[1] }}</td>
+<td>{{ review[2] }}</td>
+<td>{{ review[3].strftime("%Y-%m-%d %H:%M:%S") }}</td>
+</tr>
+{% endfor %}
+</table>
+{% if session.user_id %}
+<h3>Add a new review</h3>
+<form action="/reviews/{{ game_id }}" method="POST">
+Rating:
+<input type="radio" name="rating" value="0" checked> 0
+<input type="radio" name="rating" value="1"> 1
+<input type="radio" name="rating" value="2"> 2
+<input type="radio" name="rating" value="3"> 3
+<input type="radio" name="rating" value="4"> 4
+<input type="radio" name="rating" value="5"> 5<br>
+Comments:<br>
+<textarea name="comments" rows="5" cols="40"></textarea><br>
+<input type="submit" value="Send">
+<input type="hidden" name="game_id" value="{{ game_id }}">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+{% endif %}
+{% endblock %}

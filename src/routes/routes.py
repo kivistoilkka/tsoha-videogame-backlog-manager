@@ -1,6 +1,10 @@
 from app import app
 from flask import render_template, request, redirect, abort
-import services.users as users, services.games as games, services.platforms as platforms, services.game_collections as game_collections
+import services.users as users
+import services.games as games
+import services.platforms as platforms
+import services.game_collections as game_collections
+import services.game_reviews as game_reviews
 
 @app.route("/")
 def index():
@@ -187,3 +191,32 @@ def collection_set_hidden(id):
         message="Hidding game from collection failed",
         previous="/collection/"+str(id)
     )
+
+@app.route("/reviews/<int:id>", methods=["GET", "POST"])
+def reviews_game(id):
+    if request.method == "GET":
+        game_info = games.get_game_info(id)
+        reviews = game_reviews.get_reviews(id)
+        return render_template(
+            "game_reviews.html",
+            game_id = id,
+            game_name=game_info[0],
+            platform_name=game_info[1],
+            reviews=reviews
+        )
+
+    if request.method == "POST":
+        token = request.form["csrf_token"]
+        if not users.csrf_token_ok(token):
+            abort(403)
+        game_id = request.form["game_id"]
+        rating = request.form["rating"]
+        comments = request.form["comments"]
+        #TODO: check inputs, at least length of comments
+        if game_reviews.add_review(game_id, rating, comments):
+            return redirect("/reviews/"+str(id))
+        return render_template(
+            "error.html",
+            message="Review addition failed",
+            previous="/reviews/"+str(id)
+        )

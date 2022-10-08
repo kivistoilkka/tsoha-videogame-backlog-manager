@@ -32,5 +32,11 @@ def game_in_database(name, platform_id):
         return True
     return False
 
+def get_game_info(id):
+    sql = "SELECT G.name, P.name FROM games G, platforms P \
+        WHERE G.platform_id=P.id AND G.visible=TRUE AND G.id=:id"
+    result = db.session.execute(sql, {"id": id})
+    return result.fetchone()
+
 #TODO: set_game_hidden
 #TODO: set_game_visible
