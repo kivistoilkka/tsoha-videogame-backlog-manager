@@ -2,17 +2,7 @@
 {% block title %}Game listings{% endblock %}
 {% block content %}
 <h2>Game Listings</h2>
-<h3>List of all of the games currently available.</h3>
 Click the name to see the reviews.
-<table>
-<tr><th>Name</th><th>Platform</th></tr>
-{% for game in games %}
-<tr>
-<td><a href="/reviews/{{ game[0] }}">{{ game[1] }}</a></td>
-<td>{{ game[2] }}</td>
-</tr>
-{% endfor %}
-</table>
 <h3>Most reviews</h3>
 <table>
 <tr><th>Name</th><th>Platform</th><th>Reviews</th><th>Average rating</th></tr>
@@ -22,6 +12,16 @@ Click the name to see the reviews.
 <td>{{ game[2] }}</td>
 <td>{{ game[3] }}</td>
 <td>{{ game[4] }}</td>
+</tr>
+{% endfor %}
+</table>
+<h3>All games available</h3>
+<table>
+<tr><th>Name</th><th>Platform</th></tr>
+{% for game in games %}
+<tr>
+<td><a href="/reviews/{{ game[0] }}">{{ game[1] }}</a></td>
+<td>{{ game[2] }}</td>
 </tr>
 {% endfor %}
 </table>
