@@ -13,4 +13,16 @@ Click the name to see the reviews.
 </tr>
 {% endfor %}
 </table>
+<h3>Most reviews</h3>
+<table>
+<tr><th>Name</th><th>Platform</th><th>Reviews</th><th>Average rating</th></tr>
+{% for game in reviews %}
+<tr>
+<td><a href="/reviews/{{ game[0] }}">{{ game[1] }}</a></td>
+<td>{{ game[2] }}</td>
+<td>{{ game[3] }}</td>
+<td>{{ game[4] }}</td>
+</tr>
+{% endfor %}
+</table>
 {% endblock %}

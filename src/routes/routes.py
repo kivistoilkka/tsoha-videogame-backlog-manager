@@ -88,7 +88,8 @@ def register():
 @app.route("/listings")
 def listings():
     all_games = games.get_visible_games()
-    return render_template("listings.html", games=all_games)
+    reviews = game_reviews.get_review_numbers_averages()
+    return render_template("listings.html", games=all_games, reviews=reviews)
 
 @app.route("/admin")
 def admin():
