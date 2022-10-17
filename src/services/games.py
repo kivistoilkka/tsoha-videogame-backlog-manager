@@ -1,5 +1,11 @@
 from db import db
 
+def get_visible_games():
+    sql = "SELECT G.id, G.name, P.name FROM games G, platforms P \
+        WHERE G.platform_id=P.id AND G.visible=TRUE ORDER BY G.name"
+    result = db.session.execute(sql)
+    return result.fetchall()
+
 def get_visible_games_with_review_info():
     sql = "SELECT G.id, G.name AS game_name, P.name AS platform_name, \
         COUNT(R.rating) AS reviews, COALESCE(AVG(R.rating),-1) as review_average \
@@ -31,9 +37,8 @@ def add_game(name, platform_id):
         return False
 
 def game_in_database(name, platform_id):
-    #TODO: check with lowercase names
-    sql = "SELECT 1 FROM games WHERE name=:name AND platform_id=:platform_id"
-    result = db.session.execute(sql, {"name":name, "platform_id":platform_id})
+    sql = "SELECT 1 FROM games WHERE UPPER(name)=:name AND platform_id=:platform_id"
+    result = db.session.execute(sql, {"name":name.upper(), "platform_id":platform_id})
     if result.fetchone():
         return True
     return False

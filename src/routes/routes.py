@@ -93,8 +93,8 @@ def listings():
     return render_template(
         "listings.html",
         games=all_games,
-        reviews=reviews[:5],
-        ratings=ratings[:5])
+        reviews=reviews,
+        ratings=ratings)
 
 @app.route("/admin")
 def admin():

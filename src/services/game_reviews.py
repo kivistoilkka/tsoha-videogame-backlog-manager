@@ -37,7 +37,8 @@ def get_review_numbers_averages():
         FROM games G, platforms P, game_reviews R \
         WHERE R.game_id=G.id AND G.platform_id=P.id AND G.visible=TRUE \
         GROUP BY G.id, G.name, P.name \
-        ORDER BY reviews DESC, review_average DESC;"
+        ORDER BY reviews DESC, review_average DESC \
+        LIMIT 5"
     result = db.session.execute(sql)
     return result.fetchall()
 
@@ -47,6 +48,7 @@ def get_averages_review_numbers():
         FROM games G, platforms P, game_reviews R \
         WHERE R.game_id=G.id AND G.platform_id=P.id AND G.visible=TRUE \
         GROUP BY G.id, G.name, P.name \
-        ORDER BY review_average DESC, reviews DESC;"
+        ORDER BY review_average DESC, reviews DESC \
+        LIMIT 5"
     result = db.session.execute(sql)
     return result.fetchall()
