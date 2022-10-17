@@ -3,7 +3,21 @@
 {% block content %}
 <h2>Game Listings</h2>
 Click the name to see the reviews.
-<h3>Most reviews</h3>
+
+<h3>Five best rated games</h3>
+<table>
+<tr><th>Name</th><th>Platform</th><th>Reviews</th><th>Average rating</th></tr>
+{% for game in ratings %}
+<tr>
+<td><a href="/reviews/{{ game[0] }}">{{ game[1] }}</a></td>
+<td>{{ game[2] }}</td>
+<td>{{ game[3] }}</td>
+<td>{{ "%.2f"|format(game[4]) }}</td>
+</tr>
+{% endfor %}
+</table>
+
+<h3>Five most reviewed games</h3>
 <table>
 <tr><th>Name</th><th>Platform</th><th>Reviews</th><th>Average rating</th></tr>
 {% for game in reviews %}
@@ -11,7 +25,7 @@ Click the name to see the reviews.
 <td><a href="/reviews/{{ game[0] }}">{{ game[1] }}</a></td>
 <td>{{ game[2] }}</td>
 <td>{{ game[3] }}</td>
-<td>{{ game[4] }}</td>
+<td>{{ "%.2f"|format(game[4]) }}</td>
 </tr>
 {% endfor %}
 </table>

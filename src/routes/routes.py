@@ -89,7 +89,12 @@ def register():
 def listings():
     all_games = games.get_visible_games()
     reviews = game_reviews.get_review_numbers_averages()
-    return render_template("listings.html", games=all_games, reviews=reviews)
+    ratings = game_reviews.get_averages_review_numbers()
+    return render_template(
+        "listings.html",
+        games=all_games,
+        reviews=reviews[:5],
+        ratings=ratings[:5])
 
 @app.route("/admin")
 def admin():
