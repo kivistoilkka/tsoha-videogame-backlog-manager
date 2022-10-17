@@ -1,8 +1,14 @@
 from db import db
 
-def get_visible_games():
-    sql = "SELECT G.id, G.name, P.name FROM games G, platforms P \
-        WHERE G.platform_id=P.id AND G.visible=TRUE ORDER BY G.name"
+def get_visible_games_with_review_info():
+    sql = "SELECT G.id, G.name AS game_name, P.name AS platform_name, \
+        COUNT(R.rating) AS reviews, COALESCE(AVG(R.rating),-1) as review_average \
+        FROM games G \
+        LEFT JOIN game_reviews R ON G.id=R.game_id \
+        JOIN platforms P ON G.platform_id=P.id \
+        WHERE G.visible=TRUE \
+        GROUP BY G.id, G.name, P.name \
+        ORDER BY game_name, platform_name;"
     result = db.session.execute(sql)
     return result.fetchall()
 
