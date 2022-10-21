@@ -20,7 +20,7 @@ def get_visible_games_with_review_info():
     return result.fetchall()
 
 def get_all_games():
-    sql = "SELECT G.id, G.name, P.name, G.visible FROM games G, platforms P \
+    sql = "SELECT G.id, G.name, P.name, G.visible, P.visible FROM games G, platforms P \
         WHERE G.platform_id=P.id ORDER BY G.name"
     result = db.session.execute(sql)
     return result.fetchall()

@@ -4,7 +4,8 @@ import services.users as users
 def get_reviews(id):
     sql = "SELECT R.rating, R.comments, U.username, R.review_added \
         FROM game_reviews R, games G, users U, platforms P \
-        WHERE R.user_id=U.id AND R.game_id=G.id AND R.game_id=:id \
+        WHERE R.user_id=U.id AND R.game_id=G.id AND G.platform_id=P.id \
+        AND R.game_id=:id \
         AND R.visible=TRUE AND G.visible=TRUE and P.visible=TRUE \
         ORDER BY R.review_added"
     result = db.session.execute(sql, { "id":id })
@@ -55,3 +56,6 @@ def get_averages_review_numbers():
         LIMIT 5"
     result = db.session.execute(sql)
     return result.fetchall()
+
+#TODO: set_review_hidden
+#TODO: set_review_visible
