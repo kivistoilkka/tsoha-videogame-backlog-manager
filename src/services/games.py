@@ -25,7 +25,7 @@ def get_all_games():
     return result.fetchall()
 
 def add_game(name, platform_id):
-    if game_in_database(name, platform_id):
+    if game_in_database_and_visible(name, platform_id):
         return False
     try:
         sql = "INSERT INTO games (name, platform_id, visible) \
@@ -36,8 +36,9 @@ def add_game(name, platform_id):
     except:
         return False
 
-def game_in_database(name, platform_id):
-    sql = "SELECT 1 FROM games WHERE UPPER(name)=:name AND platform_id=:platform_id"
+def game_in_database_and_visible(name, platform_id):
+    sql = "SELECT 1 FROM games \
+        WHERE UPPER(name)=:name AND platform_id=:platform_id AND visible=TRUE"
     result = db.session.execute(sql, {"name":name.upper(), "platform_id":platform_id})
     if result.fetchone():
         return True
