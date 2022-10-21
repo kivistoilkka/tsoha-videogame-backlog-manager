@@ -108,18 +108,48 @@ def admin_games():
         abort(403)
     if request.method == "GET":
         visible_platforms = platforms.get_visible_platforms()
-        return render_template("admin_games.html", platforms=visible_platforms)
+        all_games = games.get_all_games()
+        return render_template(
+            "admin_games.html",
+            platforms=visible_platforms,
+            all_games=all_games)
     if request.method == "POST":
         token = request.form["csrf_token"]
         if not users.csrf_token_ok(token):
             abort(403)
-        name = request.form["name"]
-        platform_id = request.form["platform_id"]
-        if games.add_game(name, platform_id):
-            return redirect("/listings")
+        if request.form["operation"] == "add_game":
+            name = request.form["name"]
+            platform_id = request.form["platform_id"]
+            if games.add_game(name, platform_id):
+                return redirect("/admin/games")
+            return render_template(
+                "error.html",
+                message="Game addition failed",
+                previous="/admin/games"
+            )
+        if request.form["operation"] == "set_visibility":
+            game_id = request.form["game_id"]
+            current_visibility = request.form["current_visibility"]
+            print(current_visibility)
+            if current_visibility == "True":
+                if games.set_game_hidden(game_id):
+                    return redirect("/admin/games")
+                return render_template(
+                    "error.html",
+                    message="Game addition failed",
+                    previous="/admin/games"
+                )
+            if current_visibility == "False":
+                if games.set_game_visible(game_id):
+                    return redirect("/admin/games")
+                return render_template(
+                    "error.html",
+                    message="Game addition failed",
+                    previous="/admin/games"
+                )
         return render_template(
             "error.html",
-            message="Game addition failed",
+            message="Unknown operation",
             previous="/admin/games"
         )
 

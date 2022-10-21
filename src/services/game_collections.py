@@ -6,7 +6,7 @@ def get_visible_games(id):
     sql = "SELECT G.id, G.name, P.name, C.story_completed, C.full_completion \
         FROM collection_items C, games G, platforms P, users U \
         WHERE C.user_id=U.id AND C.game_id=G.id AND G.platform_id=P.id AND C.user_id=:id \
-        AND C.visible=TRUE ORDER BY G.name"
+        AND C.visible=TRUE AND G.visible=TRUE ORDER BY G.name"
     result = db.session.execute(sql, { "id":id })
     return result.fetchall()
 

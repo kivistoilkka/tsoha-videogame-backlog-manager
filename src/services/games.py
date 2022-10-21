@@ -19,7 +19,7 @@ def get_visible_games_with_review_info():
     return result.fetchall()
 
 def get_all_games():
-    sql = "SELECT G.name, P.name, G.visible FROM games G, platforms P \
+    sql = "SELECT G.id, G.name, P.name, G.visible FROM games G, platforms P \
         WHERE G.platform_id=P.id ORDER BY G.name"
     result = db.session.execute(sql)
     return result.fetchall()
@@ -50,5 +50,20 @@ def get_game_info(id):
     result = db.session.execute(sql, {"id": id})
     return result.fetchone()
 
-#TODO: set_game_hidden
-#TODO: set_game_visible
+def set_game_hidden(id):
+    try:
+        sql = "UPDATE games SET visible=FALSE WHERE id=:id"
+        db.session.execute(sql, { "id": id })
+        db.session.commit()
+        return True
+    except:
+        return False
+
+def set_game_visible(id):
+    try:
+        sql = "UPDATE games SET visible=TRUE WHERE id=:id"
+        db.session.execute(sql, { "id": id })
+        db.session.commit()
+        return True
+    except:
+        return False

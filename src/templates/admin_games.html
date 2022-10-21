@@ -14,5 +14,30 @@ Platform:
 </select><br>
 <input type="submit" value="Add">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+<input type="hidden" name="operation" value="add_game">
 </form>
+<h3>All games currently in the database</h3>
+<table>
+<tr><th>Name</th><th>Platform</th><th>Visible</th><th>Set visibility</th></tr>
+{% for game in all_games %}
+<tr>
+<td>{{ game[1] }}</td>
+<td>{{ game[2] }}</td>
+<td>{{ game[3] }}</td>
+<td>
+<form action="/admin/games" method="POST">
+{% if game[3] %}
+<input type="submit" value="Hide">
+{% else %}
+<input type="submit" value="Set visible">
+{% endif %}
+<input type="hidden" name="game_id" value="{{game[0]}}">
+<input type="hidden" name="current_visibility" value="{{game[3]}}">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+<input type="hidden" name="operation" value="set_visibility">
+</form>
+</td>
+</tr>
+{% endfor %}
+</table>
 {% endblock %}
