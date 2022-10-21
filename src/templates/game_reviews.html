@@ -15,7 +15,7 @@
 </table>
 {% if session.user_id %}
 <h3>Add a new review</h3>
-<form action="/reviews/{{ game_id }}" method="POST">
+<form action="/reviews/{{ game_id }}" method="POST" onsubmit="return check(this)">
 Rating:
 <input type="radio" name="rating" value="0" checked> 0
 <input type="radio" name="rating" value="1"> 1
@@ -30,4 +30,15 @@ Comments:<br>
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 {% endif %}
+
+<script>
+  check = (form) => {
+      if (form.comments.value.length > 200) {
+          alert("Comments too long, use less than 201 characters")
+          return false
+      }
+      return true
+  }
+</script>
+
 {% endblock %}

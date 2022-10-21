@@ -39,7 +39,6 @@ def register():
         username = request.form["username"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
-
         if not username or not password1 or not password2:
             return render_template(
                 "error.html",
@@ -223,7 +222,18 @@ def reviews_game(id):
         game_id = request.form["game_id"]
         rating = request.form["rating"]
         comments = request.form["comments"]
-        #TODO: check inputs, at least length of comments
+        if not int(rating) or int(rating) < 0 or int(rating) > 5:
+            return render_template(
+                "error.html",
+                message="Rating value missing or not integer in range 0-5",
+                previous="/reviews/"+str(id)
+            )
+        if len(comments) > 200:
+            return render_template(
+                "error.html",
+                message="Comments too long, use less than 201 characters",
+                previous="/reviews/"+str(id)
+            )
         if game_reviews.add_review(game_id, rating, comments):
             return redirect("/reviews/"+str(id))
         return render_template(
