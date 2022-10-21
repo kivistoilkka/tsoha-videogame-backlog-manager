@@ -203,12 +203,18 @@ def reviews_game(id):
     if request.method == "GET":
         game_info = games.get_game_info(id)
         reviews = game_reviews.get_reviews(id)
+        if game_info:
+            return render_template(
+                "game_reviews.html",
+                game_id = id,
+                game_name=game_info[0],
+                platform_name=game_info[1],
+                reviews=reviews
+            )
         return render_template(
-            "game_reviews.html",
-            game_id = id,
-            game_name=game_info[0],
-            platform_name=game_info[1],
-            reviews=reviews
+            "error.html",
+            message="Game reviews not found",
+            previous="/"
         )
 
     if request.method == "POST":
