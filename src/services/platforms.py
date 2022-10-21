@@ -29,3 +29,21 @@ def platform_in_database(name):
     if result.fetchone():
         return True
     return False
+
+def set_platform_hidden(id):
+    try:
+        sql = "UPDATE platforms SET visible=FALSE WHERE id=:id"
+        db.session.execute(sql, { "id": id })
+        db.session.commit()
+        return True
+    except:
+        return False
+
+def set_platform_visible(id):
+    try:
+        sql = "UPDATE platforms SET visible=TRUE WHERE id=:id"
+        db.session.execute(sql, { "id": id })
+        db.session.commit()
+        return True
+    except:
+        return False

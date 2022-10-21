@@ -8,12 +8,29 @@ Admin page for platforms in the database.
 Name: <input type="text" name="name"><br>
 <input type="submit" value="Add">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+<input type="hidden" name="operation" value="add_platform">
 </form>
 <h3>Platforms currently in the database</h3>
 <table>
-<tr><th>Name</th><th>Visible</th></tr>
+<tr><th>Name</th><th>Visible</th><th>Set visibility</th></tr>
 {% for platform in platforms %}
-<tr><td>{{ platform[1] }}</td><td>{{ platform[2] }}</td></tr>
+<tr>
+<td>{{ platform[1] }}</td>
+<td>{{ platform[2] }}</td>
+<td>
+<form action="/admin/platforms" method="POST">
+{% if platform[2] %}
+<input type="submit" value="Hide">
+{% else %}
+<input type="submit" value="Set visible">
+{% endif %}
+<input type="hidden" name="platform_id" value="{{platform[0]}}">
+<input type="hidden" name="current_visibility" value="{{platform[2]}}">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+<input type="hidden" name="operation" value="set_visibility">
+</form>
+</td>
+</tr>
 {% endfor %}
 </table>
 {% endblock %}

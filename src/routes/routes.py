@@ -130,13 +130,12 @@ def admin_games():
         if request.form["operation"] == "set_visibility":
             game_id = request.form["game_id"]
             current_visibility = request.form["current_visibility"]
-            print(current_visibility)
             if current_visibility == "True":
                 if games.set_game_hidden(game_id):
                     return redirect("/admin/games")
                 return render_template(
                     "error.html",
-                    message="Game addition failed",
+                    message="Visibility change failed",
                     previous="/admin/games"
                 )
             if current_visibility == "False":
@@ -144,7 +143,7 @@ def admin_games():
                     return redirect("/admin/games")
                 return render_template(
                     "error.html",
-                    message="Game addition failed",
+                    message="Visibility change failed",
                     previous="/admin/games"
                 )
         return render_template(
@@ -164,12 +163,37 @@ def admin_platforms():
         token = request.form["csrf_token"]
         if not users.csrf_token_ok(token):
             abort(403)
-        name = request.form["name"]
-        if platforms.add_platform(name):
-            return redirect("/admin/platforms")
+        if request.form["operation"] == "add_platform":
+            name = request.form["name"]
+            if platforms.add_platform(name):
+                return redirect("/admin/platforms")
+            return render_template(
+                "error.html",
+                message="Platform addition failed",
+                previous="/admin/platforms"
+            )
+        if request.form["operation"] == "set_visibility":
+            platform_id = request.form["platform_id"]
+            current_visibility = request.form["current_visibility"]
+            if current_visibility == "True":
+                if platforms.set_platform_hidden(platform_id):
+                    return redirect("/admin/platforms")
+                return render_template(
+                    "error.html",
+                    message="Visibility change failed",
+                    previous="/admin/platforms"
+                )
+            if current_visibility == "False":
+                if platforms.set_platform_visible(platform_id):
+                    return redirect("/admin/platforms")
+                return render_template(
+                    "error.html",
+                    message="Visibility change failed",
+                    previous="/admin/platforms"
+                )
         return render_template(
             "error.html",
-            message="Platform addition failed",
+            message="Unknown operation",
             previous="/admin/platforms"
         )
 
