@@ -172,7 +172,6 @@ def collection(id):
         game_id = request.form["game_id"]
         story_completed = request.form["story_completed"]
         full_completion = request.form["full_completion"]
-        #TODO: check inputs
         if game_collections.add_item(game_id, story_completed, full_completion):
             return redirect("/collection/"+str(id))
         return render_template(

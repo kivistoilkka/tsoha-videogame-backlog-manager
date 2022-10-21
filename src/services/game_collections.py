@@ -1,5 +1,6 @@
 from db import db
 import services.users as users
+import services.games as games
 
 def get_visible_games(id):
     sql = "SELECT G.id, G.name, P.name, C.story_completed, C.full_completion \
@@ -12,6 +13,8 @@ def get_visible_games(id):
 def add_item(game_id, story_completed, full_completion):
     user_id = users.user_id()
     if not user_id:
+        return False
+    if not games.game_in_database_and_visible:
         return False
     if game_in_collection(user_id, game_id):
         return set_visible_and_update(game_id, story_completed, full_completion)
@@ -69,8 +72,6 @@ def set_visible_and_update(game_id, story_completed, full_completion):
                 "full_completion": full_completion
             })
         db.session.commit()
-        print("Onnistui!")
         return True
     except:
-        print("Epäonnistui!")
         return False
