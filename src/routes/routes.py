@@ -231,34 +231,31 @@ def collection(id):
         token = request.form["csrf_token"]
         if not users.csrf_token_ok(token):
             abort(403)
-        game_id = request.form["game_id"]
-        story_completed = request.form["story_completed"]
-        full_completion = request.form["full_completion"]
-        if game_collections.add_item(game_id, story_completed, full_completion):
-            return redirect("/collection/"+str(id))
+        if request.form["operation"] == "add_to_collection":
+            game_id = request.form["game_id"]
+            story_completed = request.form["story_completed"]
+            full_completion = request.form["full_completion"]
+            if game_collections.add_item(game_id, story_completed, full_completion):
+                return redirect("/collection/"+str(id))
+            return render_template(
+                "error.html",
+                message="Game addition failed",
+                previous="/collection/"+str(id)
+            )
+        if request.form["operation"] == "hide_from_collection":
+            game_id = request.form["game_id"]
+            if game_collections.hide_from_collection(game_id):
+                return redirect("/collection/"+str(id))
+            return render_template(
+                "error.html",
+                message="Hidding game from collection failed",
+                previous="/collection/"+str(id)
+            )
         return render_template(
             "error.html",
-            message="Game addition failed",
+            message="Unknown operation",
             previous="/collection/"+str(id)
         )
-
-#TODO: refactor as possible POST action to main /collection/id
-@app.route("/collection/<int:id>/set_hidden", methods=["POST"])
-def collection_set_hidden(id):
-    this_user = users.is_user() and users.user_id() == id
-    if not this_user:
-        abort(403)
-    token = request.form["csrf_token"]
-    if not users.csrf_token_ok(token):
-        abort(403)
-    game_id = request.form["game_id"]
-    if game_collections.hide_from_collection(game_id):
-        return redirect("/collection/"+str(id))
-    return render_template(
-        "error.html",
-        message="Hidding game from collection failed",
-        previous="/collection/"+str(id)
-    )
 
 @app.route("/reviews/<int:id>", methods=["GET", "POST"])
 def reviews_game(id):
@@ -315,3 +312,8 @@ def reviews_game(id):
                 message="Review deletion failed",
                 previous="/reviews/"+str(id)
             )
+        return render_template(
+            "error.html",
+            message="Unknown operation",
+            previous="/reviews/"+str(id)
+        )

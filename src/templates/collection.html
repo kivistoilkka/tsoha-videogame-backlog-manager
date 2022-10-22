@@ -20,10 +20,11 @@
 <td>{{ game[4] }}</td>
 {% if this_user %}
 <td>
-<form action="/collection/{{ user_id }}/set_hidden" method="POST">
+<form action="/collection/{{ user_id }}" method="POST">
 <input type="submit" value="Hide">
 <input type="hidden" name="game_id" value="{{ game[0] }}">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+<input type="hidden" name="operation" value="hide_from_collection">
 </form>
 </td>
 {% endif %}
@@ -47,6 +48,7 @@ Full completion:
 <input type="radio" name="full_completion" value="FALSE" checked> No<br>
 <input type="submit" value="Add">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+<input type="hidden" name="operation" value="add_to_collection">
 </form>
 {% endif %}
 {% endblock %}
