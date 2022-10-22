@@ -1,14 +1,14 @@
 from db import db
 import services.users as users
 
-def get_reviews(id):
+def get_reviews(game_id):
     sql = "SELECT R.rating, R.comments, U.username, R.review_added, R.visible, R.id, U.id \
         FROM game_reviews R, games G, users U, platforms P \
         WHERE R.user_id=U.id AND R.game_id=G.id AND G.platform_id=P.id \
         AND R.game_id=:id \
         AND G.visible=TRUE and P.visible=TRUE \
         ORDER BY R.review_added"
-    result = db.session.execute(sql, { "id":id })
+    result = db.session.execute(sql, { "id":game_id })
     return result.fetchall()
 
 def add_review(game_id, rating, comments):
@@ -78,4 +78,12 @@ def set_review_hidden(review_id):
             return False
     return False
 
-#TODO: set_review_visible
+def get_all_reviews():
+    sql = "SELECT R.review_added, R.visible, U.username, \
+        G.id, G.name, P.name, R.rating, R.comments \
+        FROM game_reviews R, games G, users U, platforms P \
+        WHERE R.user_id=U.id AND R.game_id=G.id AND G.platform_id=P.id \
+        AND G.visible=TRUE and P.visible=TRUE \
+        ORDER BY R.review_added DESC"
+    result = db.session.execute(sql)
+    return result.fetchall()

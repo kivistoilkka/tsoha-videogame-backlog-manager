@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block title %}Admin: reviews{% endblock %}
+{% block content %}
+<h2>Admin: reviews</h2>
+Admin page for reviews in the database. You can hide reviews from game page.
+<h3>All reviews of visible games and platforms currently in the database</h3>
+<table>
+<tr>
+<th>Review added</th>
+<th>Review visible</th>
+<th>Username</th>
+<th>Game name</th>
+<th>Platform</th>
+<th>Rating</th>
+<th>Comments</th>
+</tr>
+{% for review in all_reviews %}
+<tr>
+<td>{{ review[0].strftime("%Y-%m-%d %H:%M:%S") }}</td>
+<td>{{ review[1] }}</td>
+<td>{{ review[2] }}</td>
+<td><a href="/reviews/{{ review[3] }}">{{ review[4] }}</a></td>
+<td>{{ review[5] }}</td>
+<td>{{ review[6] }}</td>
+<td>{{ review[7] }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

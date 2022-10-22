@@ -112,7 +112,8 @@ def admin_games():
         return render_template(
             "admin_games.html",
             platforms=visible_platforms,
-            all_games=all_games)
+            all_games=all_games
+        )
     if request.method == "POST":
         token = request.form["csrf_token"]
         if not users.csrf_token_ok(token):
@@ -196,6 +197,14 @@ def admin_platforms():
             message="Unknown operation",
             previous="/admin/platforms"
         )
+
+@app.route("/admin/reviews", methods=["GET"])
+def admin_reviews():
+    if not users.is_admin():
+        abort(403)
+    if request.method == "GET":
+        all_reviews = game_reviews.get_all_reviews()
+        return render_template("admin_reviews.html", all_reviews=all_reviews)
 
 @app.route("/collection/<int:id>", methods=["GET", "POST"])
 def collection(id):
