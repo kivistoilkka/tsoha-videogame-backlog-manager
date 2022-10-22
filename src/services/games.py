@@ -48,8 +48,15 @@ def game_in_database_and_visible(name, platform_id):
     return False
 
 def get_game_info(id):
-    sql = "SELECT G.name, P.name FROM games G, platforms P \
-        WHERE G.platform_id=P.id AND G.visible=TRUE AND P.visible=TRUE AND G.id=:id"
+    sql = "SELECT G.name, P.name, \
+        COALESCE(COUNT(R.rating),0) AS reviews, \
+        COALESCE(AVG(R.rating),-1) as review_average \
+        FROM games G \
+        JOIN platforms P ON G.platform_id=P.id \
+        LEFT JOIN (SELECT * FROM game_reviews WHERE visible=TRUE) R ON R.game_id=G.id \
+        WHERE G.visible=TRUE AND P.visible=TRUE \
+        AND G.id=:id \
+        GROUP BY G.name, P.name"
     result = db.session.execute(sql, {"id": id})
     return result.fetchone()
 

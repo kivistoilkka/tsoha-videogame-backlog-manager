@@ -1,7 +1,16 @@
 {% extends "layout.html" %}
-{% block title %}Reviews of {{ game_name }}{% endblock %}
+{% block title %}Reviews of {{ game_info[0] }} on {{ game_info[1]}}{% endblock %}
 {% block content %}
-<h2>Reviews of {{ game_name }} on {{ platform_name }}</h2>
+<h2>Reviews of {{ game_info[0] }} on {{ game_info[1]}}</h2>
+<p>
+Number of ratings: {{ game_info[2] }}<br>
+Average rating:
+{% if game_info[3] == -1 %}
+-
+{% else %}
+{{ "%.2f"|format(game_info[2]) }}
+{% endif %}
+</p>
 <table>
 <tr><th>Rating</th><th>Comments</th><th>Reviewer</th><th>Review added</th></tr>
 {% for review in reviews %}

@@ -266,8 +266,7 @@ def reviews_game(id):
             return render_template(
                 "game_reviews.html",
                 game_id = id,
-                game_name=game_info[0],
-                platform_name=game_info[1],
+                game_info=game_info,
                 reviews=reviews
             )
         return render_template(
