@@ -16,8 +16,20 @@
 <tr>
 <td><a href="/reviews/{{ game[0] }}">{{ game[1] }}</a></td>
 <td>{{ game[2] }}</td>
-<td>{{ game[3] }}</td>
-<td>{{ game[4] }}</td>
+<td>
+{% if game[3] %}
+✅
+{% else %}
+❌
+{% endif %}
+</td>
+<td>
+{% if game[4] %}
+✅
+{% else %}
+❌
+{% endif %}
+</td>
 {% if this_user %}
 <td>
 <form action="/collection/{{ user_id }}" method="POST">

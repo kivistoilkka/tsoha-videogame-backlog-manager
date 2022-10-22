@@ -18,13 +18,29 @@ Platform:
 </form>
 <h3>All games currently in the database</h3>
 <table>
-<tr><th>Name</th><th>Platform</th><th>Game visible</th><th>Platform visible</th><th>Set game visibility</th></tr>
+<tr><th>Name</th>
+<th>Platform</th>
+<th>Game visible</th>
+<th>Platform visible</th>
+</tr>
 {% for game in all_games %}
 <tr>
 <td>{{ game[1] }}</td>
 <td>{{ game[2] }}</td>
-<td>{{ game[3] }}</td>
-<td>{{ game[4] }}</td>
+<td>
+{% if game[3] %}
+✅
+{% else %}
+❌
+{% endif %}
+</td>
+<td>
+{% if game[4] %}
+✅
+{% else %}
+❌
+{% endif %}
+</td>
 <td>
 <form action="/admin/games" method="POST">
 {% if game[3] %}

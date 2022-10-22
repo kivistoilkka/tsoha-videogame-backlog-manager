@@ -17,7 +17,13 @@ Admin page for reviews in the database. You can hide reviews from game page.
 {% for review in all_reviews %}
 <tr>
 <td>{{ review[0].strftime("%Y-%m-%d %H:%M:%S") }}</td>
-<td>{{ review[1] }}</td>
+<td>
+{% if review[1] %}
+✅
+{% else %}
+❌
+{% endif %}
+</td>
 <td>{{ review[2] }}</td>
 <td><a href="/reviews/{{ review[3] }}">{{ review[4] }}</a></td>
 <td>{{ review[5] }}</td>
