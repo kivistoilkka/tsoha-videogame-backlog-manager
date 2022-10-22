@@ -287,7 +287,7 @@ def reviews_game(id):
             game_id = request.form["game_id"]
             rating = request.form["rating"]
             comments = request.form["comments"]
-            if not int(rating) or int(rating) < 0 or int(rating) > 5:
+            if not rating or int(rating) < 0 or int(rating) > 5:
                 return render_template(
                     "error.html",
                     message="Rating value missing or not integer in range 0-5",
