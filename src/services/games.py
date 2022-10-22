@@ -11,7 +11,7 @@ def get_visible_games_with_review_info():
     sql = "SELECT G.id, G.name AS game_name, P.name AS platform_name, \
         COUNT(R.rating) AS reviews, COALESCE(AVG(R.rating),-1) as review_average \
         FROM games G \
-        LEFT JOIN game_reviews R ON G.id=R.game_id \
+        LEFT JOIN (SELECT * FROM game_reviews WHERE visible=TRUE) R ON G.id=R.game_id \
         JOIN platforms P ON G.platform_id=P.id \
         WHERE G.visible=TRUE AND P.visible=TRUE \
         GROUP BY G.id, G.name, P.name \

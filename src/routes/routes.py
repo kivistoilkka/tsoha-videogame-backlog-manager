@@ -233,6 +233,7 @@ def collection(id):
             previous="/collection/"+str(id)
         )
 
+#TODO: refactor as possible POST action to main /collection/id
 @app.route("/collection/<int:id>/set_hidden", methods=["POST"])
 def collection_set_hidden(id):
     this_user = users.is_user() and users.user_id() == id
@@ -273,25 +274,35 @@ def reviews_game(id):
         token = request.form["csrf_token"]
         if not users.csrf_token_ok(token):
             abort(403)
-        game_id = request.form["game_id"]
-        rating = request.form["rating"]
-        comments = request.form["comments"]
-        if not int(rating) or int(rating) < 0 or int(rating) > 5:
+        if request.form["operation"] == "add_review":
+            game_id = request.form["game_id"]
+            rating = request.form["rating"]
+            comments = request.form["comments"]
+            if not int(rating) or int(rating) < 0 or int(rating) > 5:
+                return render_template(
+                    "error.html",
+                    message="Rating value missing or not integer in range 0-5",
+                    previous="/reviews/"+str(id)
+                )
+            if len(comments) > 200:
+                return render_template(
+                    "error.html",
+                    message="Comments too long, use less than 201 characters",
+                    previous="/reviews/"+str(id)
+                )
+            if game_reviews.add_review(game_id, rating, comments):
+                return redirect("/reviews/"+str(id))
             return render_template(
                 "error.html",
-                message="Rating value missing or not integer in range 0-5",
+                message="Review addition failed",
                 previous="/reviews/"+str(id)
             )
-        if len(comments) > 200:
+        if request.form["operation"] == "hide_review":
+            review_id = request.form["review_id"]
+            if game_reviews.set_review_hidden(review_id):
+                    return redirect("/reviews/"+str(id))
             return render_template(
                 "error.html",
-                message="Comments too long, use less than 201 characters",
+                message="Review deletion failed",
                 previous="/reviews/"+str(id)
             )
-        if game_reviews.add_review(game_id, rating, comments):
-            return redirect("/reviews/"+str(id))
-        return render_template(
-            "error.html",
-            message="Review addition failed",
-            previous="/reviews/"+str(id)
-        )
