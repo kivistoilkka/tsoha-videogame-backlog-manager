@@ -2,11 +2,19 @@
 {% block title %}Game listings{% endblock %}
 {% block content %}
 <h2>Game Listings</h2>
-Click the name to see the reviews.
+<p class="lead">Click the name to see the reviews.</p>
 
 <h3>Five best rated games</h3>
-<table>
-<tr><th>Name</th><th>Platform</th><th>Reviews</th><th>Average rating</th></tr>
+<table class="table table-sm col-10">
+<thead>
+<tr>
+<th scope="col">Name</th>
+<th scope="col">Platform</th>
+<th scope="col">Reviews</th>
+<th scope="col">Average rating</th>
+</tr>
+</thead>
+<tbody>
 {% for game in ratings %}
 <tr>
 <td><a href="/reviews/{{ game[0] }}">{{ game[1] }}</a></td>
@@ -15,11 +23,20 @@ Click the name to see the reviews.
 <td>{{ "%.2f"|format(game[4]) }}</td>
 </tr>
 {% endfor %}
+</tbody>
 </table>
 
 <h3>Five most reviewed games</h3>
-<table>
-<tr><th>Name</th><th>Platform</th><th>Reviews</th><th>Average rating</th></tr>
+<table class="table table-sm col-10">
+<thead>
+<tr>
+<th scope="col">Name</th>
+<th scope="col">Platform</th>
+<th scope="col">Reviews</th>
+<th scope="col">Average rating</th>
+</tr>
+</thead>
+<tbody>
 {% for game in reviews %}
 <tr>
 <td><a href="/reviews/{{ game[0] }}">{{ game[1] }}</a></td>
@@ -28,10 +45,20 @@ Click the name to see the reviews.
 <td>{{ "%.2f"|format(game[4]) }}</td>
 </tr>
 {% endfor %}
+</tbody>
 </table>
+
 <h3>All games available</h3>
-<table>
-  <tr><th>Name</th><th>Platform</th><th>Reviews</th><th>Average rating</th></tr>
+<table class="table table-striped col-10">
+<thead>
+<tr>
+<th>Name</th>
+<th>Platform</th>
+<th>Reviews</th>
+<th>Average rating</th>
+</tr>
+</thead>
+<tbody>
 {% for game in games %}
 <tr>
 <td><a href="/reviews/{{ game[0] }}">{{ game[1] }}</a></td>
@@ -45,5 +72,6 @@ Click the name to see the reviews.
 </td>
 </tr>
 {% endfor %}
+</tbody>
 </table>
 {% endblock %}

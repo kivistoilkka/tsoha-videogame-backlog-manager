@@ -2,65 +2,91 @@
 {% block title %}Game collection{% endblock %}
 {% block content %}
 <h2>Game collection</h2>
-<table>
+<table class="table table-striped col-10">
+<thead>
 <tr>
-<th>Name</th>
-<th>Platform</th>
-<th>Story completed</th>
-<th>Full completion</th>
+<th scope="col">Name</th>
+<th scope="col">Platform</th>
+<th scope="col">Story completed</th>
+<th scope="col">Full completion</th>
 {% if this_user %}
-<th>Hide from collection</th>
+<th scope="col"></th>
 {% endif %}
 </tr>
+</thead>
+<tbody>
 {% for game in collection %}
 <tr>
 <td><a href="/reviews/{{ game[0] }}">{{ game[1] }}</a></td>
 <td>{{ game[2] }}</td>
 <td>
-{% if game[3] %}
-✅
-{% else %}
-❌
-{% endif %}
+{% if game[3] %}✅{% else %}❌{% endif %}
 </td>
 <td>
-{% if game[4] %}
-✅
-{% else %}
-❌
-{% endif %}
+{% if game[4] %}✅{% else %}❌{% endif %}
 </td>
 {% if this_user %}
 <td>
 <form action="/collection/{{ user_id }}" method="POST">
-<input type="submit" value="Hide">
+<div class="form-group">
+<button type="submit" class="btn btn-secondary">Remove</button>
 <input type="hidden" name="game_id" value="{{ game[0] }}">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 <input type="hidden" name="operation" value="hide_from_collection">
+</div>
 </form>
 </td>
 {% endif %}
 </tr>
 {% endfor %}
+</tbody>
 </table>
+
 {% if this_user %}
 <h3>Add a new game to the collection or update game info</h3>
 <form action="/collection/{{ user_id }}" method="POST">
-Game:
-<select name="game_id">
+<div class="form-group col-10">
+<label for="inputGame">Game</label>
+<select class="form-control" id="inputGame" name="game_id">
 {% for game in games %}
 <option value={{ game[0] }}>{{ game[1] }} ({{ game[2] }})</option>
 {% endfor %}
-</select><br>
-Story completed:
-<input type="radio" name="story_completed" value="TRUE"> Yes
-<input type="radio" name="story_completed" value="FALSE" checked> No<br>
-Full completion:
-<input type="radio" name="full_completion" value="TRUE"> Yes
-<input type="radio" name="full_completion" value="FALSE" checked> No<br>
-<input type="submit" value="Add">
+</select>
+</div>
+<fieldset class="form-group col-10">
+<div class="row">
+<legend class="col-form-label col-sm-2 pt-0">Story completed</legend>
+<div class="col-sm-10">
+<div class="form-check">
+<input class="form-check-input" type="radio" name="story_completed" id="radioStoryComplYes" value="TRUE">
+<label class="form-check-label" for="radioStoryComplYes">Yes</label>
+</div>
+<div class="form-check">
+<input class="form-check-input" type="radio" name="story_completed" id="radioStoryComplNo" value="FALSE" checked>
+<label class="form-check-label" for="radioStoryComplNo">No</label>
+</div>
+</div>
+</fieldset>
+<fieldset class="form-group col-10">
+<div class="row">
+<legend class="col-form-label col-sm-2 pt-0">Full completion</legend>
+<div class="col-sm-10">
+<div class="form-check">
+<input class="form-check-input" type="radio" name="full_completion" id="radioFullComplYes" value="TRUE">
+<label class="form-check-label" for="radioFullComplYes">Yes</label>
+</div>
+<div class="form-check">
+<input class="form-check-input" type="radio" name="full_completion" id="radioFullComplNo" value="FALSE" checked>
+<label class="form-check-label" for="radioFullComplNo">No</label>
+</div>
+</div>
+</fieldset>
+<div class="form-group col-10">
+<button type="submit" class="btn btn-primary">Add</button>
+</div>
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 <input type="hidden" name="operation" value="add_to_collection">
+</div>
 </form>
 {% endif %}
 {% endblock %}

@@ -22,11 +22,7 @@
 <tr>
 <td>{{ review[0].strftime("%Y-%m-%d %H:%M:%S") }}</td>
 <td>
-{% if review[1] %}
-✅
-{% else %}
-❌
-{% endif %}
+{% if review[1] %}✅{% else %}❌{% endif %}
 </td>
 <td>{{ review[2] }}</td>
 <td><a href="/reviews/{{ review[3] }}">{{ review[4] }}</a></td>

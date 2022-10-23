@@ -42,18 +42,10 @@
 <td>{{ game[1] }}</td>
 <td>{{ game[2] }}</td>
 <td>
-{% if game[3] %}
-✅
-{% else %}
-❌
-{% endif %}
+{% if game[3] %}✅{% else %}❌{% endif %}
 </td>
 <td>
-{% if game[4] %}
-✅
-{% else %}
-❌
-{% endif %}
+{% if game[4] %}✅{% else %}❌{% endif %}
 </td>
 <td>
 <form action="/admin/games" method="POST">

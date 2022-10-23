@@ -31,11 +31,7 @@
 <tr>
 <td>{{ platform[1] }}</td>
 <td>
-{% if platform[2] %}
-✅
-{% else %}
-❌
-{% endif %}
+{% if platform[2] %}✅{% else %}❌{% endif %}
 </td>
 <td>
 <form action="/admin/platforms" method="POST">
