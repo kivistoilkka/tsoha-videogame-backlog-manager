@@ -2,7 +2,7 @@
 {% block title %}Reviews of {{ game_info[0] }} on {{ game_info[1]}}{% endblock %}
 {% block content %}
 <h2>Reviews of {{ game_info[0] }} on {{ game_info[1]}}</h2>
-<p>
+<p class="lead">
 Number of ratings: {{ game_info[2] }}<br>
 Average rating:
 {% if game_info[3] == -1 %}
@@ -11,8 +11,18 @@ Average rating:
 {{ "%.2f"|format(game_info[2]) }}
 {% endif %}
 </p>
-<table>
-<tr><th>Rating</th><th>Comments</th><th>Reviewer</th><th>Review added</th></tr>
+
+<table class="table table-striped col-10">
+<thead>
+<tr>
+<th scope="col">Rating</th>
+<th scope="col">Comments</th>
+<th scope="col">Reviewer</th>
+<th scope="col">Review added</th>
+<th scope="col"></th>
+</tr>
+</thead>
+<tbody>
 {% for review in reviews %}
 {% if review[4] %}
 <tr>
@@ -23,7 +33,9 @@ Average rating:
 <td>
 {% if session.user_id == review[6] or session.user_is_admin %}
 <form action="/reviews/{{ game_id }}" method="POST">
-<input type="submit" value="Remove">
+<div class="form-group">
+<button type="submit"  class="btn btn-secondary">Remove</button>
+</div>
 <input type="hidden" name="review_id" value="{{ review[5] }}">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 <input type="hidden" name="operation" value="hide_review">
@@ -33,29 +45,49 @@ Average rating:
 </tr>
 {% endif %}
 {% endfor %}
+</tbody>
 </table>
+
 {% if session.user_id %}
 <h3>Add a new review</h3>
 <form action="/reviews/{{ game_id }}" method="POST" onsubmit="return check(this)">
-Rating:
-<input type="radio" name="rating" value="0" checked> 0
-<input type="radio" name="rating" value="1"> 1
-<input type="radio" name="rating" value="2"> 2
-<input type="radio" name="rating" value="3"> 3
-<input type="radio" name="rating" value="4"> 4
-<input type="radio" name="rating" value="5"> 5<br>
-Comments:<br>
-<textarea name="comments" rows="5" cols="40"></textarea><br>
-<input type="submit" value="Send">
+
+<div class="form-group col-2">
+<label for="selectRating">Rating</label>
+<select class="form-control" id="selectRating" name="rating">
+<option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+</select>
+</div>
+<div class="form-group col-10">
+<label for="textareaComments">Comments</label>
+<textarea class="form-control" name="comments" id="textareaComments" rows="5" cols="40"></textarea>
+</div>
+<div class="form-group col-10">
+<button type="submit" class="btn btn-primary">Send</button>
+</div>
 <input type="hidden" name="game_id" value="{{ game_id }}">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 <input type="hidden" name="operation" value="add_review">
 </form>
 {% endif %}
+
 {% if session.user_is_admin %}
 <h3>Deleted reviews</h3>
-<table>
-<tr><th>Rating</th><th>Comments</th><th>Reviewer</th><th>Review added</th></tr>
+<table class="table table-striped col-10">
+<thead>
+<tr>
+<th scope="col">Rating</th>
+<th scope="col">Comments</th>
+<th scope="col">Reviewer</th>
+<th scope="col">Review added</th>
+</tr>
+</thead>
+<tbody>
 {% for review in reviews %}
 {% if not review[4] %}
 <tr>
@@ -66,6 +98,7 @@ Comments:<br>
 </tr>
 {% endif %}
 {% endfor %}
+</tbody>
 </table>
 {% endif %}
 
