@@ -2,17 +2,31 @@
 {% block title %}Admin: platforms{% endblock %}
 {% block content %}
 <h2>Admin: platforms</h2>
-Admin page for platforms in the database.
+<p class="lead">Admin page for platforms in the database.</p>
+
 <h3>Add platforms</h3>
 <form action="/admin/platforms" method="POST">
-Name: <input type="text" name="name"><br>
-<input type="submit" value="Add">
+<div class="form-group col-6">
+<label for="inputName">Name</label>
+<input type="text" class="form-control" id="inputName" name="name">
+</div>
+<div class="form-group col-6">
+<button type="submit" class="btn btn-primary">Add</button>
+</div>
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 <input type="hidden" name="operation" value="add_platform">
 </form>
+
 <h3>Platforms currently in the database</h3>
-<table>
-<tr><th>Name</th><th>Visible</th></tr>
+<table class="table table-striped col-10">
+<thead>
+<tr>
+<th scope="col">Name</th>
+<th scope="col">Visible</th>
+<th scope="col"></th>
+</tr>
+</thead>
+<tbody>
 {% for platform in platforms %}
 <tr>
 <td>{{ platform[1] }}</td>
@@ -25,11 +39,13 @@ Name: <input type="text" name="name"><br>
 </td>
 <td>
 <form action="/admin/platforms" method="POST">
+<div class="form-group">
 {% if platform[2] %}
-<input type="submit" value="Hide">
+<button type="submit" class="btn btn-secondary">Hide</button>
 {% else %}
-<input type="submit" value="Set visible">
+<button type="submit" class="btn btn-secondary">Set visible</button>
 {% endif %}
+</div>
 <input type="hidden" name="platform_id" value="{{platform[0]}}">
 <input type="hidden" name="current_visibility" value="{{platform[2]}}">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
@@ -38,5 +54,6 @@ Name: <input type="text" name="name"><br>
 </td>
 </tr>
 {% endfor %}
+</tbody>
 </table>
 {% endblock %}

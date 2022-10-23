@@ -2,27 +2,41 @@
 {% block title %}Admin: games{% endblock %}
 {% block content %}
 <h2>Admin: games</h2>
-Admin page for games in the database.
+<p class="lead">Admin page for games in the database.</p>
+
 <h3>Add games</h3>
 <form action="/admin/games" method="POST">
-Name: <input type="text" name="name"><br>
-Platform:
-<select name="platform_id">
+<div class="form-group col-6">
+<label for="inputName">Name</label>
+<input type="text" class="form-control" id="inputName" name="name">
+</div>
+<div class="form-group col-6">
+<label for="inputPlatform">Platform</label>
+<select class="form-control" id="inputPlatform" name="platform_id">
 {% for platform in platforms %}
 <option value={{ platform[0] }}>{{ platform[1] }}</option>
 {% endfor %}
-</select><br>
-<input type="submit" value="Add">
+</select>
+</div>
+<div class="form-group col-6">
+<button type="submit" class="btn btn-primary">Add</button>
+</div>
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 <input type="hidden" name="operation" value="add_game">
 </form>
+
 <h3>All games currently in the database</h3>
-<table>
-<tr><th>Name</th>
-<th>Platform</th>
-<th>Game visible</th>
-<th>Platform visible</th>
+<table class="table table-striped col-10">
+<thead>
+<tr>
+<th scope="col">Name</th>
+<th scope="col">Platform</th>
+<th scope="col">Game visible</th>
+<th scope="col">Platform visible</th>
+<th scope="col"></th>
 </tr>
+</thead>
+<tbody>
 {% for game in all_games %}
 <tr>
 <td>{{ game[1] }}</td>
@@ -43,11 +57,13 @@ Platform:
 </td>
 <td>
 <form action="/admin/games" method="POST">
+<div class="form-group">
 {% if game[3] %}
-<input type="submit" value="Hide">
+<button type="submit" class="btn btn-secondary">Hide</button>
 {% else %}
-<input type="submit" value="Set visible">
+<button type="submit" class="btn btn-secondary">Set visible</button>
 {% endif %}
+</div>
 <input type="hidden" name="game_id" value="{{game[0]}}">
 <input type="hidden" name="current_visibility" value="{{game[3]}}">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
@@ -56,5 +72,6 @@ Platform:
 </td>
 </tr>
 {% endfor %}
+</tbody>
 </table>
 {% endblock %}
